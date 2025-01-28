@@ -1,0 +1,14 @@
+---
+apiVersion: pfe.rhpds.com/v1
+kind: Gitea
+metadata:
+  name: gitea
+spec:
+  giteaSsl: true
+  giteaAdminUser: gitea
+  giteaAdminEmail: cloudpak@ibm.com
+  giteaAdminPassword: cloudPakPassw0rd!
+  giteaVolumeSize: 1Gi
+  giteaVolumeStorageClass: ocs-storagecluster-ceph-rbd
+  postgresqlVolumeSize: 1Gi
+  postgresqlVolumeStorageClass: ocs-storagecluster-ceph-rbd

@@ -1,0 +1,1 @@
+oc delete pod $@ --grace-period=0 --force

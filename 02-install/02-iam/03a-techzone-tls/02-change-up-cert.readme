@@ -1,0 +1,6 @@
+- Edit the letsencrypt-certs in the openshift GUI
+
+- Cut the contents of the second cert in the "tls.crt", leaving just a single cert. 
+- Paste the second cert somewhere
+- Add a new key/value pair with the key name of "ca.crt"
+- Paste the cert that you cut.

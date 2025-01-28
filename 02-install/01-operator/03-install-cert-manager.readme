@@ -1,0 +1,12 @@
+# This script was taken from the case package
+#
+#
+#
+#
+Wait for the catalogue sources to be in the running state
+
+git clone -b 24.0.1 https://github.com/icp4a/cert-kubernetes.git
+
+cd cert-kubernetes/scripts/cpfs/installer_scripts/cp3pt0-deployment
+
+./setup_singleton.sh --enable-licensing --enable-private-catalog  -cmNs ibm-cert-manager -licensingNs ibm-licensing -c v4.2 --license-accept

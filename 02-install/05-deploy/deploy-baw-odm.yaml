@@ -1,0 +1,300 @@
+apiVersion: icp4a.ibm.com/v1
+kind: ICP4ACluster
+metadata:
+  name: cp4a
+  namespace: cp4a
+  labels:
+    app.kubernetes.io/instance: ibm-dba
+    app.kubernetes.io/managed-by: ibm-dba
+    app.kubernetes.io/name: ibm-dba
+    release: 24.0.1
+spec:
+  appVersion: 24.0.1
+  ibm_license: accept
+  shared_configuration:
+    sc_deployment_type: Production
+    sc_deployment_platform: OCP
+    sc_deployment_context: CP4A
+    sc_deployment_fncm_license: production
+    sc_deployment_baw_license: production
+    sc_deployment_license: production
+    sc_deployment_profile_size: small
+    sc_image_repository: cp.icr.io
+    sc_ingress_enable: false
+
+    sc_deployment_patterns: "content,decisions,workflow"
+    sc_optional_components: "bai,baw_authoring,cmis,css,decisionCenter,decisionRunner,decisionServerRuntime,kafka"
+
+    image_pull_secrets:
+    - ibm-entitlement-key
+
+    #UNCOMMENT IF YOU ARE DOING CUSTOM TLS AND USING A CUSTOM DOMAIN
+    #sc_deployment_hostname_suffix: "{{ meta.namespace }}.<your domain suffix>"
+
+    sc_iam:
+      default_admin_username: cpadmin
+
+    encryption_key_secret: ibm-iaws-shared-key-secret
+    root_ca_secret: icp4a-root-ca
+
+    trusted_certificate_list: [cert-tls-ibm-github,cert-tls-letsencrypt-root,cert-tls-ibmclouddb,cert-tls-entrust,cert-tls-servicenow]
+
+    enable_fips: false
+
+    storage_configuration:
+      sc_slow_file_storage_classname: ocs-storagecluster-cephfs
+      sc_medium_file_storage_classname: ocs-storagecluster-cephfs
+      sc_fast_file_storage_classname: ocs-storagecluster-cephfs
+      sc_block_storage_classname: ocs-storagecluster-ceph-rbd
+      
+    sc_common_service:
+      operator_namespace: cp4a
+      services_namespace: cp4a
+
+    sc_audit_logging:
+      enabled: false
+
+    sc_egress_configuration:
+      sc_restricted_internet_access: false
+    
+    sc_content_initialization: true
+    sc_content_verification: false
+    sc_cpe_limited_storage: false
+    
+   
+  ldap_configuration:
+    lc_selected_ldap_type: "Custom"
+    lc_ldap_server: "ldap.robo.svc.cluster.local"
+    lc_ldap_port: "389"
+    lc_ldap_base_dn: "DC=cloudpak,DC=ibm"
+    lc_ldap_ssl_enabled: false
+    lc_bind_secret: ldap-bind-secret
+    lc_ldap_user_name_attribute: "*:uid"
+    lc_ldap_user_display_name_attr: "cn"
+    lc_ldap_group_base_dn: "OU=groups,DC=cloudpak,DC=ibm"
+    lc_ldap_group_name_attribute: "*:cn"
+    lc_ldap_group_display_name_attr: "cn"
+    lc_ldap_group_membership_search_filter: "(&(objectclass=groupOfNames)(member={0}))"
+    lc_ldap_group_member_id_map: "memberOf:member"
+    custom:
+      lc_user_filter: "(&(objectClass=inetOrgPerson)(uid=%v))"
+      lc_group_filter: "(&(objectClass=groupOfNames)(cn=%v))"
+
+  
+  datasource_configuration:
+    dc_ssl_enabled: false
+    dc_icn_datasource:
+      database_name: navdb
+      database_servername: pg-navdb-db-rw
+      dc_database_type: postgresql
+      dc_common_icn_datasource_name: ECMClientDS
+      database_port: "5432"
+    dc_gcd_datasource:
+      database_name: navdb
+      database_servername: pg-navdb-db-rw
+      dc_database_type: postgresql
+      dc_common_gcd_datasource_name: FNGCDDS
+      dc_common_gcd_xa_datasource_name: FNGCDDSXA
+      database_port: "5432"
+    dc_os_datasources:
+#    - database_name: fnos1
+#      database_servername: pg-objectstores-db-rw
+#      database_port: "5432"
+#      dc_database_type: postgresql
+#      dc_os_label: fnos1
+#      dc_common_os_datasource_name: FNOS1DS
+#      dc_common_os_xa_datasource_name: FNOS1DSXA
+    - database_name: bawdocs
+      database_servername: pg-baw-db-rw
+      database_port: "5432"
+      dc_os_label: bawdocs
+      dc_database_type: postgresql
+      dc_common_os_datasource_name: BAWDOCS
+      dc_common_os_xa_datasource_name: BAWDOCSXA
+    - database_name: bawdos
+      database_servername: pg-baw-db-rw
+      database_port: "5432"
+      dc_os_label: bawdos
+      dc_database_type: postgresql
+      dc_common_os_datasource_name: BAWDOS
+      dc_common_os_xa_datasource_name: BAWDOSXA
+    - database_name: bawtos
+      database_servername: pg-baw-db-rw
+      database_port: "5432"
+      dc_os_label: bawtos
+      dc_database_type: postgresql
+      dc_common_os_datasource_name: BAWTOS
+      dc_common_os_xa_datasource_name: BAWTOSXA
+    dc_odm_decisioncenter_datasource:
+      database_instance_secret: odm-db-secret
+      database_name: odmdc
+      database_port: "5432"
+      database_servername: pg-odm-db-rw
+      database_type: postgresql
+      ssl_enabled: false
+    dc_odm_decisionserver_datasource:
+      database_instance_secret: odm-db-secret
+      database_name: odmds
+      database_port: "5432"
+      database_servername: pg-odm-db-rw
+      database_type: postgresql
+      ssl_enabled: false
+
+  bai_configuration:
+    flink:
+      create_route: true
+
+  odm_configuration:
+    decisionCenter:
+      enabled: true
+    decisionServerRuntime:
+      enabled: true
+    decisionRunner:
+      enabled: true
+
+  navigator_configuration:
+    ban_secret_name: ibm-ban-secret
+
+    icn_production_setting:
+      icn_jndids_name: ECMClientDS
+      icn_schema: navdb
+
+
+  workflow_authoring_configuration:
+    admin_user: icpadmin
+    content_integration:
+      domain_name: P8DOMAIN
+      object_store_name: BAWDOCS
+    case:
+      domain_name: P8DOMAIN
+      object_store_name_dos: BAWDOS
+      tos_list:
+      - object_store_name: BAWTOS
+      workitem_search_in_es:
+        enable: false
+      event_emitter:
+      - tos_name: BAWTOS
+        connection_point_name: pe_conn_bawtos
+        date_sql: 20240101T000000Z
+        logical_unique_id: bawinst1
+        solution_list: "*"
+        process_pe_events: false
+    business_event:
+      enable: true
+      enable_task_record: true
+      enable_task_api: false
+      subscription:
+      - {'app_name': '*','version': '*','component_type': '*','component_name': '*','element_type': '*','element_name': '*','nature': '*'}
+
+
+
+
+  bastudio_configuration:
+    replica_size: 1
+    admin_user: icpadmin
+    admin_secret_name: bas-db-secret
+    database:
+      type: postgresql
+      host: pg-bastudio-db-rw
+      port: "5432"
+      name: bastudio
+      ssl_enabled: false
+      alternative_host:
+      alternative_port:
+    resources:
+      bastudio:
+        limits:
+          cpu: '4'
+          memory: '16Gi'
+        requests:
+          cpu: '2'
+          memory: '2Gi'
+    logs:
+      console_format: "json"
+      console_log_level: "INFO"
+      console_source: "message,trace,accessLog,ffdc,audit"
+      message_format: "SIMPLE"
+      trace_format: "ENHANCED"
+      trace_specification: "*=info"
+      max_files: 10
+      max_filesize: 50
+    playback_server:
+      admin_user: icpadmin
+      admin_secret_name: playback-server-db-secret
+      database:
+        name: baspbeng
+        type: postgresql
+        host: pg-engines-db-rw
+        port: "5432"
+        enable_ssl: false
+        alternative_host:
+        alternative_port:
+      session:
+        use_external_store: false
+      redis:
+        host:
+        port: '6379'
+        tls_enabled: false
+        username:
+
+
+
+  ecm_configuration:
+    graphql:
+      graphql_production_setting:
+        enable_graph_iql: true
+    css:
+      css_production_setting:
+        icc:
+          icc_enabled: true
+          icc_secret_name: ibm-icc-secret
+          p8domain_name: P8DOMAIN
+
+  initialize_configuration:
+    ic_domain_creation:
+      domain_name: P8DOMAIN
+      encryption_key: "128"
+    ic_ldap_creation:
+      ic_ldap_admin_user_name:
+      - icpadmin
+      ic_ldap_admins_groups_name:
+      - admins
+    ic_obj_store_creation:
+      object_stores:
+      - oc_cpe_obj_store_display_name: BAWDOCS
+        oc_cpe_obj_store_symb_name: BAWDOCS
+        oc_cpe_obj_store_conn:
+          name: BAWDOCSCONN
+          dc_os_datasource_name: BAWDOCS
+          dc_os_xa_datasource_name: BAWDOCSXA
+        oc_cpe_obj_store_workflow_data_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_index_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_blob_tbl_space: pg_default
+        oc_cpe_obj_store_admin_user_groups:
+        - admins
+      - oc_cpe_obj_store_display_name: BAWDOS
+        oc_cpe_obj_store_symb_name: BAWDOS
+        oc_cpe_obj_store_conn:
+          name: BAWDOSCONN
+          dc_os_datasource_name: BAWDOS
+          dc_os_xa_datasource_name: BAWDOSXA
+        oc_cpe_obj_store_workflow_data_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_index_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_blob_tbl_space: pg_default
+        oc_cpe_obj_store_admin_user_groups:
+        - admins
+      - oc_cpe_obj_store_display_name: BAWTOS
+        oc_cpe_obj_store_symb_name: BAWTOS
+        oc_cpe_obj_store_conn:
+          name: BAWTOSCONN
+          dc_os_datasource_name: BAWTOS
+          dc_os_xa_datasource_name: BAWTOSXA
+        oc_cpe_obj_store_enable_workflow: true
+        oc_cpe_obj_store_workflow_admin_group: admins
+        oc_cpe_obj_store_workflow_config_group: admins
+        oc_cpe_obj_store_workflow_data_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_index_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_blob_tbl_space: pg_default
+        oc_cpe_obj_store_workflow_pe_conn_point_name: pe_conn_bawtos
+        oc_cpe_obj_store_admin_user_groups:
+        - admins

@@ -1,0 +1,25 @@
+apiVersion: operator.ibm.com/v3
+kind: CommonService
+metadata:
+  namespace: cp4a
+  name: common-service
+spec:
+  license:
+    accept: true 
+  operatorNamespace: cp4a
+  servicesNamespace: cp4a
+  size: small
+  storageClass: ocs-storagecluster-ceph-rbd
+---
+apiVersion: operator.ibm.com/v1alpha1
+kind: OperandRequest
+metadata:
+  namespace: cp4a
+  name: iaf-system-common-service
+spec:
+  requests:
+  - operands:
+      - name: ibm-platformui-operator
+      - name: ibm-im-operator
+    registry: common-service
+    registryNamespace: cp4a

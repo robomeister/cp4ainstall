@@ -1,0 +1,8 @@
+Choose the custom tls path if you have done the following:
+
+- aquired your own domain name
+- created tls certificates and a key for that domain
+- created a CNAME entry in a public DNS to point your domain to the techzone cluster
+- succesfully pinged the techzone cluster using your new domain name
+
+Otherwise choose the techzone tls path.

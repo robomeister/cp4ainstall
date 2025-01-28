@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ibm-cp4ba-common-config
+data:
+  operators_namespace: cp4a
+  services_namespace: cp4a

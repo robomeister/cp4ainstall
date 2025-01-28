@@ -1,0 +1,6 @@
+Increase the size of the following two PVCs to 10GB:
+
+cpe-textextstore
+cdra-datastore
+
+Reboot the pods for them to pick up the change.

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-beaver
+  labels:
+    app: cloud-beaver
+spec:
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: cloud-beaver
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cloud-beaver
+    spec:
+      containers:
+        - name: cloud-beaver
+          image: dbeaver/cloudbeaver:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8978
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1024Mi
+          securityContext:
+            allowPrivilegeEscalation: true
+            privileged: true
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+            runAsUser: 0
+      serviceAccount: robo
+      serviceAccountName: robo
+

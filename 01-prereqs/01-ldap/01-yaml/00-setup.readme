@@ -1,0 +1,14 @@
+oc new-project robo
+
+oc create sa robo
+
+oc edit scc privileged
+
+add "- system:serviceaccount:robo:robo" to the privileged scc user list
+
+It will look like this when you are done:
+
+users:
+- system:admin
+- system:serviceaccount:openshift-infra:build-controller
+- system:serviceaccount:robo:robo

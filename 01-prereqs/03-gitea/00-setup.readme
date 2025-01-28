@@ -1,0 +1,1 @@
+oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy

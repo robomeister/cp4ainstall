@@ -1,0 +1,14 @@
+###################################################
+#
+#  ENTITLEMENT
+#
+#
+###################################################
+
+Do this:
+
+oc get secret pull-secret -n openshift-config --output="jsonpath={.data.\.dockerconfigjson}" | base64 -d | grep cp.icr.io
+
+If you do not see a pull secret for cp.icr.io, then check out the following URL's:
+   https://www.ibm.com/docs/en/cloud-paks/cp-biz-automation/24.0.1?topic=ppd-getting-access-images-from-public-entitled-registry
+   https://myibm.ibm.com/products-services/containerlibrary

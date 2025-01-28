@@ -1,0 +1,9 @@
+The last operator to deploy is the odlm operator.  It takes about 10 minutes for it to be ready.
+
+
+oc get pods:
+operand-deployment-lifecycle-manager-d9db6cbf6-bfspw              0/1     ContainerCreating   0          0s
+
+
+oc get pods:
+operand-deployment-lifecycle-manager-d9db6cbf6-bfspw              1/1     Running     0          48s
