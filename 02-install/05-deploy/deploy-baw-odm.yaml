@@ -170,6 +170,9 @@ spec:
       object_store_name_dos: BAWDOS
       tos_list:
       - object_store_name: BAWTOS
+        connection_point_name: "pe_conn_bawtos"
+        target_environment_name: "dev_env_connection_definition"
+        is_default: true
       workitem_search_in_es:
         enable: false
       event_emitter:
