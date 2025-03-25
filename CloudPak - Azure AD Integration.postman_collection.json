@@ -17,7 +17,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "grant_type=password&username=cpadmin&password=DvTWSRud74YT3In50h8yEbtlBU1ic1fn&scope=openid",
+					"raw": "grant_type=password&username=cpadmin&password=DvTWSRud74YT3In70h8yEbtlBU1ic1fn&scope=openid",
 					"options": {
 						"raw": {
 							"language": "text"
@@ -161,7 +161,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "grant_type=password&username=scimadmin&password=DGZFQaoKY4A8TZUNXievT3QOMtVnewVw&scope=openid"
+					"raw": "grant_type=password&username=scimadmin&password=DGZFQaoKY9A8TZUNXievT3QOMtVnewVw&scope=openid"
 				},
 				"url": {
 					"raw": "{{CP-CONSOLE-URL}}/idprovider/v1/auth/identitytoken",
