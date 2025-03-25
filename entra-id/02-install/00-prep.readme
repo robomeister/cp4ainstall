@@ -1,0 +1,12 @@
+#########################################
+#
+#   NOTES
+#
+##########################################
+
+
+- The LDAP cloudpak admin userid and password is currently set to icpadmin/cloudPakPassw0rd!
+
+- LDAP needs to be configured before any install attempt.  There is an in-cluster ldap option available in the 01-prereqs/01-ldap directory.  The CR is hardcoded for this LDAP. If you use a different LDAP, you will need to update the ldap_configuration section accordingly.
+
+- The in-cluster LDAP admin password is cloudPakPassw0rd!

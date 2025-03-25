@@ -1,0 +1,170 @@
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-bastudio-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      ssl_min_protocol_version: TLSv1.2
+      max_prepared_transactions: "90"
+      max_connections: "110"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 50Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-baw-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      max_prepared_transactions: "150"
+      max_connections: "200"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 100Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-objectstores-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      max_prepared_transactions: "150"
+      max_connections: "200"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 50Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "1Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-navdb-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      max_prepared_transactions: "90"
+      max_connections: "110"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 25Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-odm-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      max_prepared_transactions: "90"
+      max_connections: "110"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 25Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: pg-engines-db
+spec:
+  imagePullSecrets:
+  - name: ibm-entitlement-key
+  instances: 1
+  primaryUpdateStrategy: unsupervised
+  description: "Postgres for CP4A"
+  postgresql:
+    parameters:
+      max_prepared_transactions: "90"
+      max_connections: "110"
+  storage:
+    storageClass: "ocs-storagecluster-ceph-rbd"
+    size: 25Gi
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: px-common-superuser-password
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "500m"
+    limits:
+      memory: "16Gi"
+      cpu: "4"
+---

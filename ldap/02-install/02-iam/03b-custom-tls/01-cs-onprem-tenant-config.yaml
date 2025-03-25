@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cs-onprem-tenant-config
+  namespace: cp4a
+labels:
+  cs_onprem_tenant_config: "true"
+data:
+  custom_hostname: console-{{ meta.namespace }}.<your domain suffix>
+  custom_host_certificate_secret: custom-tls-secret

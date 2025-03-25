@@ -1,0 +1,97 @@
+
+
+git clone -b 24.0.1 https://github.com/icp4a/cert-kubernetes.git
+
+cd cert-kubernetes/scripts
+
+Run this script:
+
+   ./cp4a-clusteradmin-setup.sh
+
+This script will pull the catalogue sources, set up the ibm certificate manager, the ibm licensing manager, and install the neccessary operators.
+
+APPLY THE FOLLOWING PROMPTS AS THEY APPEAR:
+
+   [INFO] Setting up the cluster for IBM Cloud Pak for Business Automation
+
+   Do you wish setup your cluster for a online based CP4BA deployment or for a airgap/offline based CP4BA deployment :
+   1) Online
+   2) Offline/Airgap
+   Enter a valid option [1 to 2]: 1
+
+   Select the cloud platform to deploy:
+   1) RedHat OpenShift Kubernetes Service (ROKS) - Public Cloud
+   2) Openshift Container Platform (OCP) - Private Cloud
+   3) Other ( Certified Kubernetes Cloud Platform / CNCF)
+   Enter a valid option [1 to 3]: 2
+
+   What type of deployment is being performed?
+   1) Starter
+   2) Production
+   Enter a valid option [1 to 2]: 2
+
+   Do you want to proceed with this check? (Yes/No, default: No): No
+   
+   Do you want to deploy CP4BA using private catalog (recommended)? (Yes/No, default: Yes): Yes
+   
+   Do you want to deploy CP4BA as separation of operators and operands? (Yes/No, default: No): No
+
+   Where do you want to deploy Cloud Pak for Business Automation?
+   Enter the name for a new project or an existing project (namespace): cp4a
+
+
+
+   (Some stuff will happen)
+
+
+
+   Do you have a Cloud Pak for Business Automation Entitlement Registry key (Yes/No, default: No): Yes
+
+   Enter your Entitlement Registry key:
+
+Here you need to enter your entitlement key.  You can either use one of your own from 
+  
+  https://myibm.ibm.com/products-services/containerlibrary
+
+Or you can grab the entitlement key that is burned into your techzone cluster. Do this:
+
+  oc get secret pull-secret -n openshift-config --output="jsonpath={.data.\.dockerconfigjson}" | base64 -d | grep cp.icr.io
+
+You will see a bunch of entries, including one that looks like this:
+
+
+***** NOTE: THE KEY BELOW IS NOT CORRECT, SO DO NOT USE IT. FOLLOW THE STEPS BELOW TO USE THE KEY THAT COMES WITH YOUR CLUSTER *****
+
+"cp.icr.io":{"auth":"Y3A6ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKcGMzTWlPaUpKUWswZ1RXRnlhMlYwY0d4aFkyVWlMQ0pwWVhRaU9qRTFPRGMxT1RJek1UQXNJbXAwYVNJNklqTTFObU00WmpWa09EZGxPRFEwWVRrNE5HSXdNMkUwTW1RMU0yWTBNVGczSW4wLnVVb3YyM1ZUNWVxVjNiS3pKWXVKMS1JQVFNdGVpcUJzWl9CVmktdHowMjV=","email":"dtev2@ibm.com"}
+
+You will need to decode the "auth" key and enter that as your Entitlement Registry key for example:
+
+echo Y3A6ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKcGMzTWlPaUpKUWswZ1RXRnlhMlYwY0d4aFkyVWlMQ0pwWVhRaU9qRTFPRGMxT1RJek1UQXNJbXAwYVNJNklqTTFObU00WmpWa09EZGxPRFEwWVRrNE5HSXdNMkUwTW1RMU0yWTBNVGczSW4wLnVVb3YyM1ZUNWVxVjNiS3pKWXVKMS1JQVFNdGVpcUJzWl9CVmktdHowMjV= | base64 -d
+
+cp:eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE1ODc1OTIzMTAsImp0aSI6IjM1NmM4ZjVkODdlODQ0YTk4NGIwM2E0MmQ1M2Y0MTg3In0.uUov23VT5eqV3bKzJYuJ1-IAQMteiqBsZ_BVi-tz022
+
+In this case you would enter this as your key:
+
+eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJJQk0gTWFya2V0cGxhY2UiLCJpYXQiOjE1ODc1OTIzMTAsImp0aSI6IjM1NmM4ZjVkODdlODQ0YTk4NGIwM2E0MmQ1M2Y0MTg3In0.uUov23VT5eqV3bKzJYuJ1-IAQMteiqBsZ_BVi-tz022
+
+***** NOTE: THE KEY ABOVE IS NOT CORRECT, SO DO NOT USE IT. FOLLOW THE STEPS ABOVE TO USE THE KEY THAT COMES WITH YOUR CLUSTER *****
+
+
+
+
+After that the script will go about installing the Catalogue Sources, the certificate manager, the ibm license manager, and all the initial operators.
+
+
+
+The script will spend a lot of time here:
+
+   [INFO] Waiting for CP4BA operator pod initialization
+   ..............................
+
+
+Let the script complete.  It may time out waiting to the odlm operator to finish starting.  This is not a problem, just wait until operand-deployment-lifecycle-manager pod is up:
+
+operand-deployment-lifecycle-manager-             1/1     Running     0
+
+
+Now you are ready for the next step!

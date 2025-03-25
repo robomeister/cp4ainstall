@@ -1,0 +1,18 @@
+The IAM system takes about 10 minutes (on a good day. Patience.) to install.  
+
+oc get operandrequest:
+
+iaf-system-common-service     10m     Running   2024-12-18T14:28:17Z
+ibm-iam-request               7m25s   Running   2024-12-18T14:31:19Z
+postgresql-operator-request   2m57s   Running   2024-12-18T14:35:47Z
+
+
+And you see these pods running:
+
+
+oc get pods:
+
+platform-auth-service-xxxxxxxxxx-yyyyy                            1/1     Running     0          2m38s
+platform-identity-management-aaaaaaaaaa-bbbbb                     1/1     Running     0          2m36s
+platform-identity-provider-cccccccccc-ddddd                       1/1     Running     0          2m36s
+

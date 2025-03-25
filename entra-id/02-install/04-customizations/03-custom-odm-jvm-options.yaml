@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-odm-dc-jvm-options-configmap
+data:
+  dc-jvm-options: |
+    -Duser.timezone=Canada/Eastern
+    -Dcom.ibm.jsse2.overrideDefaultTLS=true
+    -Dclient.encoding.override=UTF-8
+    -Dfile.encoding=UTF-8
+    -Djdk.nativeDigest=false
+    -Dcom.ibm.rules.engine.variablesetinspector=false
+    --add-exports=java.xml/com.sun.org.apache.xerces.internal.parsers=ALL-UNNAMED
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-odm-ds-runtime-jvm-options-configmap
+data:
+  dsr-jvm-options: |
+    -Duser.timezone=Canada/Eastern
+    -Dcom.ibm.jsse2.overrideDefaultTLS=true
+    -Djdk.nativeDigest=false
+    -Dcom.ibm.rules.engine.variablesetinspector=false
+    -Xtune:throughput
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-odm-ds-console-jvm-options-configmap
+data:
+  dsc-jvm-options: |
+    -Duser.timezone=Canada/Eastern
+    -Dcom.ibm.jsse2.overrideDefaultTLS=true
+    -Djdk.nativeDigest=false
+    -Dcom.ibm.rules.engine.variablesetinspector=false
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-odm-dr-jvm-options-configmap
+data:
+  dr-jvm-options: |
+    -Duser.timezone=Canada/Eastern
+    -Dcom.ibm.jsse2.overrideDefaultTLS=true
+    -Djdk.nativeDigest=false
+    -Dcom.ibm.rules.engine.variablesetinspector=false

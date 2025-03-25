@@ -1,0 +1,6 @@
+oc exec -it pg-navdb-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"
+oc exec -it pg-bastudio-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"
+oc exec -it pg-baw-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"
+oc exec -it pg-objectstores-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"
+oc exec -it pg-engines-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"
+oc exec -it pg-odm-db-1 -c postgres -- /bin/bash -c "psql -U postgres -c 'drop database app;'"

@@ -1,0 +1,48 @@
+Zen takes another 30 minutes to install.  Patience!
+
+You can track it's progress with the following:
+
+oc get zenservice:
+iaf-zen-cpdservice             InProgress   3m8s
+
+
+Wait for the status to change from InProgress to Completed:
+
+oc get zenservice:
+iaf-zen-cpdservice             Completed   28m
+
+
+
+You can also track the progress with describe.  Wait until you see Progress make it to 100%, as below:
+
+oc describe zenservice:
+Name:         iaf-zen-cpdservice
+Namespace:    cp4a
+Labels:       <none>
+Annotations:  <none>
+API Version:  zen.cpd.ibm.com/v1
+Kind:         ZenService
+Metadata:
+  Creation Timestamp:  2024-12-18T14:42:53Z
+  Generation:          1
+  Resource Version:    28840572
+  UID:                 fc5fbebc-08a8-4cad-bf89-2435c1147251
+Spec:
+  Block Storage Class:  ocs-storagecluster-ceph-rbd
+  File Storage Class:   ocs-storagecluster-cephfs
+  Iam Integration:      true
+  Scale Config:         small
+  Zen Custom Route:
+    route_reencrypt:  true
+    route_secret:     letsencrypt-certs
+Status:
+  Progress:                    100%
+  Progress Message:            The Current Operation Is Completed
+  Current Version:             6.0.4
+  Supported Operand Versions:  6.0.4
+  URL:                         cpd-cp4a.apps.67537db3a308442003f6d2bb.ocp.techzone.ibm.com
+  Zen Message:                 Play run has been successfully completed
+  Zen Operator Build Number:   zen operator 6.0.4 build 96
+  Zen Status:                  Completed
+Events:                        <none>
+

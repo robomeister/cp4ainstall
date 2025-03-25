@@ -1,0 +1,10 @@
+- Launch the OpenShift UI
+- Mine to Workloads-->Secrets
+- Switch to the cp4a namespace
+- Edit the cp4a namespace "letsencrypt-certs" secret
+
+
+- Add a new key/value pair with the key name of "ca.crt"
+- Cut the contents of the second cert in the "tls.crt", leaving just a single cert. 
+- Paste the second cert into the value of the new "ca.crt" 
+- Save the secret
